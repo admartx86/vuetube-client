@@ -1,4 +1,14 @@
 {
   "name": "vuetube-client",
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.1.0",
+  "scripts": {
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.8"
+  },
+  "dependencies": {
+    "vue": "^3.4.21"
+  }
 }
