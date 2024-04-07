@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
+import RegisterForm from './components/RegisterForm.vue';
+import LoginForm from './components/LoginForm.vue';
+
 </script>
 
 <template>
@@ -12,6 +15,8 @@ import HelloWorld from './components/HelloWorld.vue'
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
+  <RegisterForm />
+  <LoginForm />
 </template>
 
 <style scoped>
