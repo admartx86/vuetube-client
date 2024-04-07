@@ -16,6 +16,9 @@
 </template>
 
 <script>
+
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -25,11 +28,17 @@ export default {
   },
   methods: {
     login() {
-      // Make an API call
+      axios.post('http://127.0.0.1:8000/login', {
+        email: this.email,
+        password: this.password
+      }).then(response => {
+        console.log("Login successful:", response);
+        this.email = '';
+        this.password = '';
+      }).catch(error => {
+        console.error("Login failed:", error);
+      });
       console.log("Logging in with:", this.email, this.password);
-      // Reset form after login
-      this.email = '';
-      this.password = '';
     }
   }
 }
