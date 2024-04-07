@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -25,11 +27,17 @@ export default {
   },
   methods: {
     register() {
-      // make API call
-      console.log("Registering:", this.email, this.password);
-      // Reset form after registration
-      this.email = '';
-      this.password = '';
+      axios.post('http://127.0.0.1:8000/register', {
+        email: this.email,
+        password: this.password
+      }).then(response => {
+        console.log("Registration successful:", response);
+        this.email = '';
+        this.password = '';
+      }).catch(error => {
+        console.error("Registration failed:", error);
+      });
+      console.log("Registering with:", this.email, this.password);
     }
   }
 }
