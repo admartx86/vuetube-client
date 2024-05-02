@@ -1,21 +1,21 @@
 <template>
   <div>
-    <h2>Register</h2>
-    <form @submit.prevent="register">
+    <h2>Sign In</h2>
+    <form @submit.prevent="login">
       <div>
-        <label for="register-email">Email </label>
-        <input id="register-email" v-model="email" type="email" required />
+        <label for="login-email">Email </label>
+        <input id="login-email" v-model="email" type="email" required />
       </div>
       <div>
-        <label for="register-password">Password </label>
+        <label for="login-password">Password </label>
         <input
-          id="register-password"
+          id="login-password"
           v-model="password"
           type="password"
           required
         />
       </div>
-      <button type="submit">Register</button>
+      <button type="submit">Sign In</button>
     </form>
   </div>
 </template>
@@ -31,10 +31,10 @@
       };
     },
     methods: {
-      register() {
+      login() {
         axios
           .post(
-            `${import.meta.env.VITE_API_URL}register`,
+            `${import.meta.env.VITE_API_URL}/login`,
             {
               email: this.email,
               password: this.password,
@@ -42,12 +42,12 @@
             { withCredentials: true },
           )
           .then((response) => {
-            console.log('Registration successful! Response:', response);
+            console.log('Login successful! Response:', response);
             this.email = '';
             this.password = '';
           })
           .catch((error) => {
-            console.error('Registration failed. Error:', error);
+            console.error('Login failed. Response:', error);
           });
       },
     },

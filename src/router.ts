@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from './components/Home.vue';
+import HomePage from './components/HomePage.vue';
+import SignInPage from './components/SignInPage.vue';
+import RegisterPage from './components/RegisterPage.vue';
+import UploadPage from './components/UploadPage.vue';
 import VideoPage from './components/VideoPage.vue';
 
 const router = createRouter({
@@ -8,7 +11,22 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: Home
+            component: HomePage
+        },
+        {
+            path: '/sign-in',
+            name: 'Sign In',
+            component: SignInPage
+        },
+        {
+            path: '/register',
+            name: 'Register',
+            component: RegisterPage
+        },
+        {
+            path: '/upload',
+            name: 'Upload',
+            component: UploadPage
         },
         {
             path: '/video/:videoId',
