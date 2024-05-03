@@ -4,11 +4,20 @@
     <h1>Home</h1>
     <ul>
       <li v-for="video in videos" :key="video.id">
-        <h3>{{ video.video_name }}</h3>
-        <video v-if="video.video_url" width="320" height="240" @mouseover="playVideo" @mouseout="pauseVideo" muted>
-          <source :src="video.video_url" type="video/mp4" />
-          Your browser cannot display this video.
-        </video>
+        <a :href="`${viteAppUrl}/video/${video.id}`">
+          <h3>{{ video.video_name }}</h3>
+          <video
+            v-if="video.video_url"
+            width="320"
+            height="240"
+            @mouseover="playVideo"
+            @mouseout="pauseVideo"
+            muted
+          >
+            <source :src="video.video_url" type="video/mp4" />
+            Your browser cannot display this video.
+          </video>
+        </a>
       </li>
     </ul>
   </div>
@@ -21,6 +30,7 @@
     data() {
       return {
         videos: [],
+        viteAppUrl: import.meta.env.VITE_APP_URL,
       };
     },
     async mounted() {
@@ -33,7 +43,7 @@
         console.error('Error fetching videos:', error);
       }
     },
-     methods: {
+    methods: {
       playVideo(event: MouseEvent) {
         const videoElement = event.currentTarget as HTMLVideoElement;
         videoElement.play();
