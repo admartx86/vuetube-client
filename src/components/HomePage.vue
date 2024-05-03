@@ -5,7 +5,7 @@
     <ul>
       <li v-for="video in videos" :key="video.id">
         <h3>{{ video.video_name }}</h3>
-        <video v-if="video.video_url" width="320" height="240" controls>
+        <video v-if="video.video_url" width="320" height="240" @mouseover="playVideo" @mouseout="pauseVideo" muted>
           <source :src="video.video_url" type="video/mp4" />
           Your browser cannot display this video.
         </video>
@@ -32,6 +32,17 @@
       } catch (error) {
         console.error('Error fetching videos:', error);
       }
+    },
+     methods: {
+      playVideo(event: MouseEvent) {
+        const videoElement = event.currentTarget as HTMLVideoElement;
+        videoElement.play();
+      },
+      pauseVideo(event: MouseEvent) {
+        const videoElement = event.currentTarget as HTMLVideoElement;
+        videoElement.pause();
+        videoElement.currentTime = 0;
+      },
     },
   };
 </script>
