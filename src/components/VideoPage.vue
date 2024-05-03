@@ -2,7 +2,13 @@
   <div>
     <router-link to="/">Home</router-link>
     <h1>{{ videoData.video_name }}</h1>
-    <video v-if="videoData.video_url" width="320" height="240" controls>
+    <video
+      v-if="videoData.video_url"
+      width="320"
+      height="240"
+      controls
+      autoplay
+    >
       <source :src="videoData.video_url" type="video/mp4" />
       Your browser cannot display this video.
     </video>
