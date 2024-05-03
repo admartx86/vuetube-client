@@ -2,7 +2,36 @@
   <div>
     <router-link to="/sign-in">Sign In</router-link>
     <h1>Home</h1>
+    <ul>
+      <li v-for="video in videos" :key="video.id">
+        <h3>{{ video.video_name }}</h3>
+        <video v-if="video.video_url" width="320" height="240" controls>
+          <source :src="video.video_url" type="video/mp4" />
+          Your browser cannot display this video.
+        </video>
+      </li>
+    </ul>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script lang="ts">
+  import axios from 'axios';
+
+  export default {
+    data() {
+      return {
+        videos: [],
+      };
+    },
+    async mounted() {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/videos`,
+        );
+        this.videos = response.data;
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+      }
+    },
+  };
+</script>
