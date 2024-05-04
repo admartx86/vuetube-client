@@ -9,4 +9,5 @@ export const useUserStore = defineStore('user', {
       this.email = email;
     },
   },
+  persist: true,
 });
