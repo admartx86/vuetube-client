@@ -38,7 +38,7 @@
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/videos`,
         );
-        this.videos = response.data;
+        this.videos = response.data.reverse();
       } catch (error) {
         console.error('Error fetching videos:', error);
       }
