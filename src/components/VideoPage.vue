@@ -12,7 +12,11 @@
       <source :src="videoData.video_url" type="video/mp4" />
       Your browser cannot display this video.
     </video>
+    <br>
+    <span> {{ videoData.author }} </span>
+    <br>
     <span>{{ videoData.views }} views</span>
+    <br>
     <button @click="deleteVideo">Delete Video</button>
   </div>
 </template>

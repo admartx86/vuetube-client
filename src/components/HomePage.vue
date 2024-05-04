@@ -18,6 +18,8 @@
             Your browser cannot display this video.
           </video>
         </a>
+        <br>
+    <span> {{ video.author }} </span>
       </li>
     </ul>
   </div>
