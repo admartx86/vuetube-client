@@ -1,5 +1,6 @@
 <template>
   <div>
+  <img src="https://vuetube.s3.us-east-2.amazonaws.com/Vuetube_Banner.webp" alt="Vuetube">
     <router-link to="/sign-in">Sign In</router-link>
     <h1>Home</h1>
     <ul>
