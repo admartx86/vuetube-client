@@ -55,7 +55,7 @@
   onMounted(async () => {
     try {
       const response = await axios.get(
-        `https://localhost:443/videos/${route.params.videoId}`,
+        `${import.meta.env.VITE_API_URL}/videos/${route.params.videoId}`,
       );
       videoData.value = response.data;
     } catch (error) {
