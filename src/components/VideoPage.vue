@@ -1,6 +1,7 @@
 <template>
   <div>
     <router-link to="/">Home</router-link>
+    <router-link to="/sign-in">Sign In</router-link>
     <h1>{{ videoData.video_name }}</h1>
     <video
       v-if="videoData.video_url"
