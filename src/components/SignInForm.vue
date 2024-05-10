@@ -1,5 +1,6 @@
 <template>
   <div>
+    <span v-if="userStore.username">You are signed in as {{userStore.username}}.</span>
     <h2>Sign In</h2>
     <form @submit.prevent="login">
       <div>
@@ -44,7 +45,7 @@ export default defineComponent({
 
         if (response.status === 200 && response.data.user) {
           console.log('Login successful! Response:', response);
-          userStore.setUser(response.data.user.email);
+          userStore.setUser(response.data.user.username, response.data.user.email);
           email.value = '';
           password.value = '';
         } else {
