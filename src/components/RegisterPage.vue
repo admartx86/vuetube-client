@@ -1,9 +1,6 @@
 <template>
   <router-link to="/">Home</router-link>
-  <br>
-  Registration not available at this time.
-  <br>
-  <!-- <RegisterForm /> -->
+  <RegisterForm />
   Already have an account? <router-link to="/sign-in">Sign In</router-link>
 </template>
 
