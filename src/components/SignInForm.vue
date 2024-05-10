@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span v-if="userStore.username">You are signed in as {{userStore.username}}.</span>
-    <h2>Sign In</h2>
+      <h2>Sign In</h2>
+    <span v-if="userStore.username">You are currently signed in as {{userStore.username}}.</span>
     <form @submit.prevent="login">
       <div>
         <label for="login-email">Email</label>
