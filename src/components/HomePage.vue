@@ -26,8 +26,10 @@
         </a>
         <br />
         <span> {{ video.author }} </span>
-        <br>
+        <br />
         <span>{{ video.views }} views</span>
+        <br />
+        <span>{{ video.timeAgo }}</span>
       </li>
     </ul>
   </div>
@@ -40,6 +42,11 @@
   import { useRoute, useRouter } from 'vue-router';
   import { useUserStore } from '../stores/user';
 
+  import dayjs from 'dayjs';
+  import relativeTime from 'dayjs/plugin/relativeTime';
+
+  dayjs.extend(relativeTime);
+
   const videos = ref([]);
   const viteAppUrl = import.meta.env.VITE_APP_URL;
   const router = useRouter();
@@ -51,11 +58,20 @@
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/videos`,
       );
-      videos.value = response.data.reverse();
+      videos.value = response.data
+        .map((video) => ({
+          ...video,
+          timeAgo: formatRelativeTime(video.created_at),
+        }))
+        .reverse();
     } catch (error) {
       console.error('Error fetching videos:', error);
     }
   });
+
+  const formatRelativeTime = (createdAt) => {
+    return dayjs(createdAt).fromNow();
+  };
 
   // Methods for video control
   const playVideo = (event: MouseEvent) => {
