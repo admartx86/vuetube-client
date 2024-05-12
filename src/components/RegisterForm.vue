@@ -6,8 +6,8 @@
     >
     <form @submit.prevent="register">
       <div>
-      <label for="register-username">Username</label>
-      <input id="register-username" v-model="username" type="text" required />
+        <label for="register-username">Username</label>
+        <input id="register-username" v-model="username" type="text" required />
       </div>
       <div>
         <label for="register-email">Email</label>
@@ -31,17 +31,18 @@
   import axios from 'axios';
   import { useUserStore } from '../stores/user';
   import { defineComponent, ref } from 'vue';
-
+  import { useRouter } from 'vue-router';
   export default defineComponent({
     setup() {
       const username = ref('');
       const email = ref('');
       const password = ref('');
       const userStore = useUserStore();
+      const router = useRouter();
 
       const register = async () => {
         try {
-          console.log(username.value, email.value, password.value)
+          console.log(username.value, email.value, password.value);
           const response = await axios.post(
             `${import.meta.env.VITE_API_URL}/register`,
             {
@@ -54,13 +55,11 @@
           if (response.status === 201) {
             console.log('Registration successful! Response:', response);
             // Assume response contains user info if needed
-            userStore.setUser(
-              username.value,
-              email.value,
-            );
-            username.value= '';
+            userStore.setUser(username.value, email.value);
+            username.value = '';
             email.value = '';
             password.value = '';
+            router.push('/');
           }
         } catch (error) {
           console.error('Registration failed. Error:', error);
