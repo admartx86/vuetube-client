@@ -1,7 +1,9 @@
 <template>
   <div>
     <router-link to="/">Home</router-link>
-    <router-link to="/sign-in">Sign In</router-link>
+     <span v-if="userStore.username">Hello, {{ userStore.username }}!</span>
+    <SignOutButton v-if="userStore.username" />
+    <router-link v-if="!userStore.username" to="/sign-in">Sign In</router-link>
     <h1>{{ videoData.video_name }}</h1>
     <video
       v-if="videoData.video_url"
@@ -27,10 +29,11 @@
   import Cookies from 'js-cookie';
   import { ref, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
-
+import { useUserStore } from '../stores/user';
+import SignOutButton from './SignOutButton.vue'; 
   const route = useRoute();
   const videoData = ref({});
-
+  const userStore = useUserStore();
   const deleteVideo = async () => {
     try {
       await axios.get(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
