@@ -1,7 +1,9 @@
 <template>
   <div>
-      <h2>Sign In</h2>
-    <span v-if="userStore.username">You are currently signed in as {{userStore.username}}.</span>
+    <h2>Sign In</h2>
+    <span v-if="userStore.username"
+      >You are currently signed in as {{ userStore.username }}.</span
+    >
     <form @submit.prevent="login">
       <div>
         <label for="login-email">Email</label>
@@ -22,46 +24,49 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { useUserStore } from '../stores/user';
-import { defineComponent, ref, watch } from 'vue';
+  import axios from 'axios';
+  import { useUserStore } from '../stores/user';
+  import { defineComponent, ref, watch } from 'vue';
 
-export default defineComponent({
-  setup() {
-    const email = ref('');
-    const password = ref('');
-    const userStore = useUserStore();
+  export default defineComponent({
+    setup() {
+      const email = ref('');
+      const password = ref('');
+      const userStore = useUserStore();
 
-    const login = async () => {
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_API_URL}/login`,
-          {
-            email: email.value,
-            password: password.value,
-          },
-          { withCredentials: true },
-        );
+      const login = async () => {
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_API_URL}/login`,
+            {
+              email: email.value,
+              password: password.value,
+            },
+            { withCredentials: true },
+          );
 
-        if (response.status === 200 && response.data.user) {
-          console.log('Login successful! Response:', response);
-          userStore.setUser(response.data.user.username, response.data.user.email);
-          email.value = '';
-          password.value = '';
-        } else {
-          console.log('Login failed. Response:', response);
+          if (response.status === 200 && response.data.user) {
+            console.log('Login successful! Response:', response);
+            userStore.setUser(
+              response.data.user.username,
+              response.data.user.email,
+            );
+            email.value = '';
+            password.value = '';
+          } else {
+            console.log('Login failed. Response:', response);
+          }
+        } catch (error) {
+          console.error('Login failed. Response:', error);
         }
-      } catch (error) {
-        console.error('Login failed. Response:', error);
-      }
-    };
+      };
 
-    return {
-      email,
-      password,
-      login,
-      userStore,
-    };
-  },
-});
+      return {
+        email,
+        password,
+        login,
+        userStore,
+      };
+    },
+  });
 </script>

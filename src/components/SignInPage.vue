@@ -1,6 +1,7 @@
 <template>
   <router-link to="/">Home</router-link>
   <SignInForm />
+
   Don't have an account? <router-link to="/register">Register</router-link>
 </template>
 

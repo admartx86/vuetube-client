@@ -13,11 +13,11 @@
       <source :src="videoData.video_url" type="video/mp4" />
       Your browser cannot display this video.
     </video>
-    <br>
+    <br />
     <span> {{ videoData.author }} </span>
-    <br>
+    <br />
     <span>{{ videoData.views }} views</span>
-    <br>
+    <br />
     <button @click="deleteVideo">Delete Video</button>
   </div>
 </template>
@@ -37,6 +37,7 @@
         withCredentials: true,
       });
       const xsrfToken = Cookies.get('XSRF-TOKEN');
+      console.log(xsrfToken);
       if (!xsrfToken) {
         throw new Error('CSRF token not found.');
       }

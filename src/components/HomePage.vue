@@ -1,7 +1,12 @@
 <template>
   <div>
-  <img src="https://vuetube.s3.us-east-2.amazonaws.com/Vuetube_Banner.webp" alt="Vuetube">
-    <router-link to="/sign-in">Sign In</router-link>
+    <img
+      src="https://vuetube.s3.us-east-2.amazonaws.com/Vuetube_Banner.webp"
+      alt="Vuetube"
+    />
+    <span v-if="userStore.username">Hello, {{ userStore.username }}!</span>
+    <SignOutButton v-if="userStore.username" />
+    <router-link v-if="!userStore.username" to="/sign-in">Sign In</router-link>
     <h1>Home</h1>
     <ul>
       <li v-for="video in videos" :key="video.id">
@@ -19,43 +24,46 @@
             Your browser cannot display this video.
           </video>
         </a>
-        <br>
-    <span> {{ video.author }} </span>
+        <br />
+        <span> {{ video.author }} </span>
       </li>
     </ul>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
   import axios from 'axios';
+  import { ref, onMounted } from 'vue';
+  import SignOutButton from './SignOutButton.vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import { useUserStore } from '../stores/user';
 
-  export default {
-    data() {
-      return {
-        videos: [],
-        viteAppUrl: import.meta.env.VITE_APP_URL,
-      };
-    },
-    async mounted() {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/videos`,
-        );
-        this.videos = response.data.reverse();
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-      }
-    },
-    methods: {
-      playVideo(event: MouseEvent) {
-        const videoElement = event.currentTarget as HTMLVideoElement;
-        videoElement.play();
-      },
-      pauseVideo(event: MouseEvent) {
-        const videoElement = event.currentTarget as HTMLVideoElement;
-        videoElement.pause();
-        videoElement.currentTime = 0;
-      },
-    },
+  const videos = ref([]);
+  const viteAppUrl = import.meta.env.VITE_APP_URL;
+  const router = useRouter();
+  const userStore = useUserStore();
+
+  // Fetch videos when component is mounted
+  onMounted(async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/videos`,
+      );
+      videos.value = response.data.reverse();
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+    }
+  });
+
+  // Methods for video control
+  const playVideo = (event: MouseEvent) => {
+    const videoElement = event.currentTarget as HTMLVideoElement;
+    videoElement.play();
+  };
+
+  const pauseVideo = (event: MouseEvent) => {
+    const videoElement = event.currentTarget as HTMLVideoElement;
+    videoElement.pause();
+    videoElement.currentTime = 0;
   };
 </script>
