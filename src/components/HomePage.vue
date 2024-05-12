@@ -26,6 +26,8 @@
         </a>
         <br />
         <span> {{ video.author }} </span>
+        <br>
+        <span>{{ video.views }} views</span>
       </li>
     </ul>
   </div>
