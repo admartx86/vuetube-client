@@ -27,12 +27,14 @@
   import axios from 'axios';
   import { useUserStore } from '../stores/user';
   import { defineComponent, ref, watch } from 'vue';
+  import { useRouter } from 'vue-router';
 
   export default defineComponent({
     setup() {
       const email = ref('');
       const password = ref('');
       const userStore = useUserStore();
+      const router = useRouter();
 
       const login = async () => {
         try {
@@ -53,6 +55,7 @@
             );
             email.value = '';
             password.value = '';
+            router.push('/');
           } else {
             console.log('Login failed. Response:', response);
           }
