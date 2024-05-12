@@ -4,10 +4,15 @@
     <span v-if="userStore.username"
       >You are currently signed in as {{ userStore.username }}.</span
     >
-    <form @submit.prevent="login">
+    <form @submit.prevent="handleLogin">
       <div>
-        <label for="login-email">Email</label>
-        <input id="login-email" v-model="email" type="email" required />
+        <label for="login-username-or-email">Username or Email</label>
+        <input
+          id="login-username-or-email"
+          v-model="login"
+          type="text"
+          required
+        />
       </div>
       <div>
         <label for="login-password">Password</label>
@@ -31,17 +36,17 @@
 
   export default defineComponent({
     setup() {
-      const email = ref('');
+      const login = ref('');
       const password = ref('');
       const userStore = useUserStore();
       const router = useRouter();
 
-      const login = async () => {
+      const handleLogin = async () => {
         try {
           const response = await axios.post(
             `${import.meta.env.VITE_API_URL}/login`,
             {
-              email: email.value,
+              login: login.value,
               password: password.value,
             },
             { withCredentials: true },
@@ -53,7 +58,7 @@
               response.data.user.username,
               response.data.user.email,
             );
-            email.value = '';
+            login.value = '';
             password.value = '';
             router.push('/');
           } else {
@@ -65,9 +70,9 @@
       };
 
       return {
-        email,
-        password,
         login,
+        password,
+        handleLogin,
         userStore,
       };
     },
