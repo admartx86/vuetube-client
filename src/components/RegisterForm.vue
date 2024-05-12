@@ -6,6 +6,10 @@
     >
     <form @submit.prevent="register">
       <div>
+      <label for="register-username">Username</label>
+      <input id="register-username" v-model="username" type="text" required />
+      </div>
+      <div>
         <label for="register-email">Email</label>
         <input id="register-email" v-model="email" type="email" required />
       </div>
@@ -30,27 +34,31 @@
 
   export default defineComponent({
     setup() {
+      const username = ref('');
       const email = ref('');
       const password = ref('');
       const userStore = useUserStore();
 
       const register = async () => {
         try {
+          console.log(username.value, email.value, password.value)
           const response = await axios.post(
             `${import.meta.env.VITE_API_URL}/register`,
             {
+              username: username.value,
               email: email.value,
               password: password.value,
             },
             { withCredentials: true },
           );
-          if (response.status === 200) {
+          if (response.status === 201) {
             console.log('Registration successful! Response:', response);
             // Assume response contains user info if needed
             userStore.setUser(
-              response.data.user.username,
-              response.data.user.email,
+              username.value,
+              email.value,
             );
+            username.value= '';
             email.value = '';
             password.value = '';
           }
@@ -60,6 +68,7 @@
       };
 
       return {
+        username,
         email,
         password,
         register,
