@@ -20,6 +20,8 @@
     <br />
     <span>{{ videoData.views }} views</span>
     <br />
+    <br />
+    <span>{{ timeAgo }}</span>
     <button @click="deleteVideo">Delete Video</button>
   </div>
 </template>
@@ -31,9 +33,14 @@
   import { useRoute } from 'vue-router';
   import { useUserStore } from '../stores/user';
   import SignOutButton from './SignOutButton.vue';
+  import dayjs from 'dayjs';
+  import relativeTime from 'dayjs/plugin/relativeTime';
+
+  dayjs.extend(relativeTime);
   const route = useRoute();
   const videoData = ref({});
   const userStore = useUserStore();
+  const timeAgo = ref('');
   const deleteVideo = async () => {
     try {
       await axios.get(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
@@ -63,6 +70,7 @@
         `${import.meta.env.VITE_API_URL}/videos/${route.params.videoId}`,
       );
       videoData.value = response.data;
+      timeAgo.value = dayjs(videoData.value.created_at).fromNow();
     } catch (error) {
       console.error('Failed to fetch video. Error:', error);
     }
