@@ -3,6 +3,10 @@
     <button v-if="!selectedFile" @click="selectFile">Select File</button>
     <span v-if="selectedFile">Video Name</span>
     <input v-if="selectedFile" type="text" v-model="video_name" />
+    <br>
+    <span v-if="selectedFile">Description</span>
+    <textarea v-if="selectedFile" type="text" rows="4" columns="50" v-model="description" />
+    <br>
     <button v-if="selectedFile" @click="goBack">Back</button>
     <button v-if="selectedFile" @click="postVideo">Post</button>
     <input
@@ -51,6 +55,7 @@
           const formData = new FormData();
           formData.append('video', this.selectedFile);
           formData.append('video_name', this.video_name);
+          formData.append('description', this.description);
           const response = await axios.post(
             `${import.meta.env.VITE_API_URL}/videos`,
             formData,
