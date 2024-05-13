@@ -9,8 +9,8 @@
     <router-link v-if="!userStore.username" to="/sign-in">Sign In</router-link>
     <h1>Home</h1>
     <ul>
-      <li v-for="video in videos" :key="video.id">
-        <a :href="`${viteAppUrl}/video/${video.id}`">
+      <li v-for="video in videos" :key="video.unique_code">
+        <a :href="`${viteAppUrl}/video/${video.unique_code}`">
           <h3>{{ video.video_name }}</h3>
           <video
             v-if="video.video_url"
