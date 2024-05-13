@@ -24,7 +24,7 @@
     <span>{{ timeAgo }}</span>
     <br />
     <span>{{ videoData.description }}</span>
-    <button @click="deleteVideo">Delete Video</button>
+    <button v-if="videoData.author === userStore.username" @click="deleteVideo">Delete Video</button>
   </div>
 </template>
 

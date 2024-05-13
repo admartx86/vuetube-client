@@ -7,7 +7,6 @@
     <span v-if="userStore.username">Hello, {{ userStore.username }}!</span>
     <SignOutButton v-if="userStore.username" />
     <router-link v-if="!userStore.username" to="/sign-in">Sign In</router-link>
-    <h1>Home</h1>
     <ul>
       <li v-for="video in videos" :key="video.unique_code">
         <a :href="`${viteAppUrl}/video/${video.unique_code}`">
