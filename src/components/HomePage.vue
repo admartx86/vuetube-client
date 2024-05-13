@@ -8,10 +8,12 @@
     <SignOutButton v-if="userStore.username" />
     <router-link v-if="!userStore.username" to="/sign-in">Sign In</router-link>
     <ul>
-      <li v-for="video in videos" :key="video.unique_code">
+    <div class="container">
+    <div class="row">
+      <li v-for="video in videos" :key="video.unique_code" class="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
         <a :href="`${viteAppUrl}/video/${video.unique_code}`">
           <h3>{{ video.video_name }}</h3>
-          <video
+          <video class="p-4"
             v-if="video.video_url"
             width="320"
             height="240"
@@ -30,7 +32,11 @@
         <br />
         <span>{{ video.timeAgo }}</span>
       </li>
+    </div>
+    </div>
     </ul>
+    
+   
   </div>
 </template>
 
