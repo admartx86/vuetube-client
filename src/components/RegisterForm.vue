@@ -1,20 +1,20 @@
 <template>
-  <div>
+  <div class="d-flex flex-column p-4">
     <h2>Register</h2>
     <span v-if="userStore.username"
       >You are currently signed in as {{ userStore.username }}.</span
     >
-    <form @submit.prevent="register">
-      <div>
-        <label for="register-username">Username</label>
+    <form class="d-flex flex-column p-2 gap-2" @submit.prevent="register">
+      <div class="d-flex justify-content-between">
+        <label class="px-4" for="register-username">Username</label>
         <input id="register-username" v-model="username" type="text" required />
       </div>
-      <div>
-        <label for="register-email">Email</label>
+      <div class="d-flex justify-content-between">
+        <label class="px-4" for="register-email">Email</label>
         <input id="register-email" v-model="email" type="email" required />
       </div>
-      <div>
-        <label for="register-password">Password</label>
+      <div class="d-flex justify-content-between">
+        <label class="px-4" for="register-password">Password</label>
         <input
           id="register-password"
           v-model="password"
@@ -22,7 +22,11 @@
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+      <div class="p-2">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">
+          Register
+        </button>
+      </div>
     </form>
   </div>
 </template>

@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div class="d-flex flex-column p-4">
     <h2>Sign In</h2>
     <span v-if="userStore.username"
       >You are currently signed in as {{ userStore.username }}.</span
     >
-    <form @submit.prevent="handleLogin">
-      <div>
-        <label for="login-username-or-email">Username or Email</label>
+    <form class="d-flex flex-column p-2 gap-2" @submit.prevent="handleLogin">
+      <div class="d-flex justify-content-between">
+        <label class="px-4" for="login-username-or-email"
+          >Username or Email</label
+        >
         <input
           id="login-username-or-email"
           v-model="login"
@@ -14,8 +16,8 @@
           required
         />
       </div>
-      <div>
-        <label for="login-password">Password</label>
+      <div class="d-flex justify-content-between">
+        <label class="px-4" for="login-password">Password</label>
         <input
           id="login-password"
           v-model="password"
@@ -23,7 +25,11 @@
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+      <div class="p-2">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">
+          Sign In
+        </button>
+      </div>
     </form>
   </div>
 </template>
