@@ -1,10 +1,21 @@
 <template>
   <div>
-    <router-link to="/">Home</router-link>
-    <span v-if="userStore.username">Hello, {{ userStore.username }}!</span>
-    <SignOutButton v-if="userStore.username" />
-    <router-link v-if="!userStore.username" to="/sign-in">Sign In</router-link>
-    <h1>{{ videoData.video_name }}</h1>
+    <div class="d-flex justify-content-end p-2">
+      <div class="p-2">
+        <router-link to="/">Home</router-link>
+      </div>
+      <div class="p-2">
+        <span v-if="userStore.username">Hello, {{ userStore.username }}!</span>
+      </div>
+      <div class="p-2">
+        <SignOutButton v-if="userStore.username" />
+      </div>
+      <div class="p-2">
+        <router-link v-if="!userStore.username" to="/sign-in"
+          >Sign In</router-link
+        >
+      </div>
+    </div>
     <video
       v-if="videoData.video_url"
       width="320"
@@ -15,15 +26,13 @@
       <source :src="videoData.video_url" type="video/mp4" />
       Your browser cannot display this video.
     </video>
+    <h1 class="block-text">{{ videoData.video_name }}</h1>
+
+    <span class="block-text"> {{ videoData.author }}</span>
+
+    <span class="block-text">{{ videoData.views }} views {{ timeAgo }}</span>
     <br />
-    <span> {{ videoData.author }} </span>
-    <br />
-    <span>{{ videoData.views }} views</span>
-    <br />
-    <br />
-    <span>{{ timeAgo }}</span>
-    <br />
-    <span>{{ videoData.description }}</span>
+    <span class="block-text">{{ videoData.description }}</span>
     <button v-if="videoData.author === userStore.username" @click="deleteVideo">
       Delete Video
     </button>
@@ -80,3 +89,10 @@
     }
   });
 </script>
+
+<style>
+  .block-text {
+    display: block;
+    text-align: start;
+  }
+</style>
