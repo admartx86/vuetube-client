@@ -12,7 +12,6 @@
     <div class="row">
       <li v-for="video in videos" :key="video.unique_code" class="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
         <a :href="`${viteAppUrl}/video/${video.unique_code}`">
-          <h3>{{ video.video_name }}</h3>
           <video class="p-4"
             v-if="video.video_url"
             width="320"
@@ -24,13 +23,14 @@
             <source :src="video.video_url" type="video/mp4" />
             Your browser cannot display this video.
           </video>
+          <h2>{{ video.video_name }}</h2>
         </a>
         <br />
-        <span> {{ video.author }} </span>
+        <h3> {{ video.author }} </h3>
         <br />
-        <span>{{ video.views }} views</span>
+        <h3>{{ video.views }} views</h3>
         <br />
-        <span>{{ video.timeAgo }}</span>
+        <h3>{{ video.timeAgo }}</h3>
       </li>
     </div>
     </div>
