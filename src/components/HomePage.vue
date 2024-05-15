@@ -1,42 +1,54 @@
 <template>
   <div>
-    <img
-      src="https://vuetube.s3.us-east-2.amazonaws.com/Vuetube_Banner.webp"
-      alt="Vuetube"
-    />
-    <span v-if="userStore.username">Hello, {{ userStore.username }}!</span>
-    <SignOutButton v-if="userStore.username" />
-    <router-link v-if="!userStore.username" to="/sign-in">Sign In</router-link>
-    <ul>
-    <div class="container">
-    <div class="row">
-      <li v-for="video in videos" :key="video.unique_code" class="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
-        <a :href="`${viteAppUrl}/video/${video.unique_code}`">
-          <video class="p-4"
-            v-if="video.video_url"
-            width="320"
-            height="240"
-            @mouseover="playVideo"
-            @mouseout="pauseVideo"
-            muted
+    <div class="d-flex justify-content-between">
+      <img
+        src="https://vuetube.s3.us-east-2.amazonaws.com/Vuetube_Banner.webp"
+        class="w-50"
+        alt="Vuetube"
+      />
+      <div class="d-flex justify-content-between p-2">
+        <span class="p-2" v-if="userStore.username"
+          >Hello, {{ userStore.username }}!</span
+        >
+        <SignOutButton class="p-2" v-if="userStore.username" />
+      </div>
+      <router-link class="p-2" v-if="!userStore.username" to="/sign-in"
+        >Sign In</router-link
+      >
+    </div>
+    <ul class="p-2">
+      <div class="container p-2">
+        <div class="row">
+          <li
+            v-for="video in videos"
+            :key="video.unique_code"
+            class="col-12 col-sm-6 col-md-4 col-lg-3"
           >
-            <source :src="video.video_url" type="video/mp4" />
-            Your browser cannot display this video.
-          </video>
-          <h2>{{ video.video_name }}</h2>
-        </a>
-        <br />
-        <h3> {{ video.author }} </h3>
-        <br />
-        <h3>{{ video.views }} views</h3>
-        <br />
-        <h3>{{ video.timeAgo }}</h3>
-      </li>
-    </div>
-    </div>
+            <a
+              class="text-dark text-decoration-none"
+              :href="`${viteAppUrl}/video/${video.unique_code}`"
+            >
+              <video
+                class="video-responsive border"
+                v-if="video.video_url"
+                @mouseover="playVideo"
+                @mouseout="pauseVideo"
+                muted
+                playsinline
+              >
+                <source :src="video.video_url" type="video/mp4" />
+                Your browser cannot display this video.
+              </video>
+              <h2>{{ video.video_name }}</h2>
+            </a>
+            <span>{{ video.author }}</span>
+            <br />
+            <span>{{ video.views }} views </span>
+            <span>{{ video.timeAgo }}</span>
+          </li>
+        </div>
+      </div>
     </ul>
-    
-   
   </div>
 </template>
 
@@ -78,7 +90,6 @@
     return dayjs(createdAt).fromNow();
   };
 
-  // Methods for video control
   const playVideo = (event: MouseEvent) => {
     const videoElement = event.currentTarget as HTMLVideoElement;
     videoElement.play();
@@ -90,3 +101,11 @@
     videoElement.currentTime = 0;
   };
 </script>
+
+<style scoped>
+  .video-responsive {
+    max-width: 100%;
+    max-height: auto;
+    object-fit: contain;
+  }
+</style>

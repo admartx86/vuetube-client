@@ -3,10 +3,16 @@
     <button v-if="!selectedFile" @click="selectFile">Select File</button>
     <span v-if="selectedFile">Video Name</span>
     <input v-if="selectedFile" type="text" v-model="video_name" />
-    <br>
+    <br />
     <span v-if="selectedFile">Description</span>
-    <textarea v-if="selectedFile" type="text" rows="4" columns="50" v-model="description" />
-    <br>
+    <textarea
+      v-if="selectedFile"
+      type="text"
+      rows="4"
+      columns="50"
+      v-model="description"
+    />
+    <br />
     <button v-if="selectedFile" @click="goBack">Back</button>
     <button v-if="selectedFile" @click="postVideo">Post</button>
     <input

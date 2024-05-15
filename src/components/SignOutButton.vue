@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="confirmSignout">Sign Out</button>
+    <span @click="confirmSignout">Sign Out</span>
   </div>
 </template>
 
