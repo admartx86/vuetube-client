@@ -22,7 +22,7 @@
           required
         />
       </div>
-      <button type="submit">Register</button>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
     </form>
   </div>
 </template>

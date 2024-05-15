@@ -23,7 +23,7 @@
           required
         />
       </div>
-      <button type="submit">Sign In</button>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
     </form>
   </div>
 </template>
