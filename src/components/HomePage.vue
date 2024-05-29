@@ -41,7 +41,9 @@
               </video>
             </a>
             <h2 class="text-start">{{ video.video_name }}</h2>
-            <p class="text-start">{{ video.author }} {{ video.views }} views {{ video.timeAgo }}</p>
+            <p class="text-start">
+              {{ video.author }} {{ video.views }} views {{ video.timeAgo }}
+            </p>
           </li>
         </div>
       </div>

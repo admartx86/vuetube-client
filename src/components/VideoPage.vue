@@ -23,15 +23,84 @@
       controls
       autoplay
     >
-      <source :src="videoData.video_url" type="video/mp4"/>
+      <source :src="videoData.video_url" type="video/mp4" />
       Your browser cannot display this video.
     </video>
     <h1 class="block-text">{{ videoData.video_name }}</h1>
-    <p class="text-start"> {{ videoData.author }} {{ videoData.views }} views {{ timeAgo }}</p>
+    <p class="text-start">
+      {{ videoData.author }} {{ videoData.views }} views {{ timeAgo }}
+    </p>
     <p class="text-start">{{ videoData.description }}</p>
-    <button v-if="videoData.author === userStore.username" @click="deleteVideo">
+    <button
+      v-if="videoData.author === userStore.username"
+      @click="showConfirmation"
+      class="btn btn-primary btn-lg btn-block"
+    >
       Delete Video
     </button>
+    <div
+      v-if="showConfirmDialog"
+      class="modal fade show"
+      style="display: block"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="confirmDeleteModal"
+      aria-modal="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title">Delete Video?</h5>
+            <button
+              type="button"
+              class="btn-close"
+              @click="hideConfirmation"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-start">
+              Are you sure you want to delete this video?
+            </p>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="deleteConfirmationCheckbox"
+                v-model="deleteAllowed"
+              />
+              <label
+                class="form-check-label text-start"
+                for="deleteConfirmationCheckbox"
+              >
+                Yes, I understand that deleting is permanent and can't be
+                undone.
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              @click="hideConfirmation"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              :class="[
+                'btn',
+                deleteAllowed ? 'btn-danger' : 'btn-light',
+                { 'btn-inactive': !deleteAllowed },
+              ]"
+              @click="deleteAllowed ? deleteVideoConfirmed() : null"
+            >
+              Delete Video
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -50,6 +119,24 @@
   const videoData = ref({});
   const userStore = useUserStore();
   const timeAgo = ref('');
+
+  const showConfirmDialog = ref(false);
+  const deleteAllowed = ref(false);
+
+  const showConfirmation = () => {
+    showConfirmDialog.value = true;
+    deleteAllowed.value = false;
+  };
+
+  const hideConfirmation = () => {
+    showConfirmDialog.value = false;
+  };
+
+  const deleteVideoConfirmed = async () => {
+    hideConfirmation();
+    await deleteVideo();
+  };
+
   const deleteVideo = async () => {
     try {
       await axios.get(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
@@ -90,5 +177,12 @@
   .block-text {
     display: block;
     text-align: start;
+  }
+  .btn-light.btn-inactive {
+    cursor: not-allowed;
+    pointer-events: none;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
   }
 </style>
