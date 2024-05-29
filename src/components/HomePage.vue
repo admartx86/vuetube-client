@@ -29,7 +29,7 @@
               :href="`${viteAppUrl}/video/${video.unique_code}`"
             >
               <video
-                class="video-responsive border"
+                class="video-responsive border rounded-4"
                 v-if="video.video_url"
                 @mouseover="playVideo"
                 @mouseout="pauseVideo"
@@ -39,12 +39,9 @@
                 <source :src="video.video_url" type="video/mp4" />
                 Your browser cannot display this video.
               </video>
-              <h2>{{ video.video_name }}</h2>
             </a>
-            <span>{{ video.author }}</span>
-            <br />
-            <span>{{ video.views }} views </span>
-            <span>{{ video.timeAgo }}</span>
+            <h2 class="text-start">{{ video.video_name }}</h2>
+            <p class="text-start">{{ video.author }} {{ video.views }} views {{ video.timeAgo }}</p>
           </li>
         </div>
       </div>
