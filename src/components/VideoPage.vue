@@ -30,9 +30,36 @@
     <p class="text-start">
       {{ videoData.author }} {{ videoData.views }} views {{ timeAgo }}
     </p>
-    <p class="text-start">{{ videoData.description }}</p>
+    <p class="text-start">{{ !isEditing ? videoData.description : null }}</p>
+
+    <!-- Edit Description Button -->
     <button
-      v-if="videoData.author === userStore.username"
+      v-if="videoData.author === userStore.username && !isEditing"
+      @click="isEditing = true"
+      class="btn btn-primary btn-lg btn-block"
+    >
+      Edit Description
+    </button>
+
+    <!-- Description Editor -->
+    <div v-if="isEditing">
+      <textarea v-model="editedDescription" rows="4" cols="50"></textarea>
+      <br />
+      <div class="p-2">
+        <button @click="cancelEdit" class="btn btn-secondary btn-lg btn-block">
+          Cancel
+        </button>
+        <button
+          @click="updateDescription"
+          class="btn btn-primary btn-lg btn-block"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+
+    <button
+      v-if="videoData.author === userStore.username && !isEditing"
       @click="showConfirmation"
       class="btn btn-primary btn-lg btn-block"
     >
@@ -123,6 +150,9 @@
   const showConfirmDialog = ref(false);
   const deleteAllowed = ref(false);
 
+  const isEditing = ref(false);
+  const editedDescription = ref('');
+
   const showConfirmation = () => {
     showConfirmDialog.value = true;
     deleteAllowed.value = false;
@@ -160,6 +190,36 @@
     }
   };
 
+  const updateDescription = async () => {
+    try {
+      await axios.get(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
+        withCredentials: true,
+      });
+      const xsrfToken = Cookies.get('XSRF-TOKEN');
+      if (!xsrfToken) {
+        throw new Error('CSRF token not found.');
+      }
+      const response = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/videos/${route.params.videoId}/description`,
+        { description: editedDescription.value },
+        {
+          withCredentials: true,
+          headers: { 'X-XSRF-TOKEN': xsrfToken },
+        },
+      );
+      videoData.value.description = editedDescription.value;
+      isEditing.value = false;
+      console.log('Description updated successfully:', response.data);
+    } catch (error) {
+      console.error('Failed to update description. Error:', error);
+    }
+  };
+
+  const cancelEdit = () => {
+    isEditing.value = false;
+    editedDescription.value = videoData.value.description;
+  };
+
   onMounted(async () => {
     try {
       const response = await axios.get(
@@ -167,6 +227,7 @@
       );
       videoData.value = response.data;
       timeAgo.value = dayjs(videoData.value.created_at).fromNow();
+      editedDescription.value = videoData.value.description;
     } catch (error) {
       console.error('Failed to fetch video. Error:', error);
     }
