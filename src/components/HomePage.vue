@@ -1,20 +1,28 @@
 <template>
   <div>
     <div class="d-flex justify-content-between">
+      
       <img
         src="https://vuetube.s3.us-east-2.amazonaws.com/Vuetube_Banner.webp"
         class="w-50"
         alt="Vuetube"
       />
-      <div class="d-flex justify-content-between p-2">
+      <div class="d-flex justify-content-end">
+      <router-link class="p-2" to="/upload"
+        >Upload</router-link
+      >
+      <div class="d-flex flex-column justify-content-start p-2">
         <span class="p-2" v-if="userStore.username"
           >Hello, {{ userStore.username }}!</span
         >
-        <SignOutButton class="p-2" v-if="userStore.username" />
+         <SignOutButton class="p-2" v-if="userStore.username" />
       </div>
+      
       <router-link class="p-2" v-if="!userStore.username" to="/sign-in"
         >Sign In</router-link
       >
+     
+      </div>
     </div>
     <ul class="p-2">
       <div class="container p-2">
