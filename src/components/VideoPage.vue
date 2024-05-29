@@ -23,16 +23,12 @@
       controls
       autoplay
     >
-      <source :src="videoData.video_url" type="video/mp4" />
+      <source :src="videoData.video_url" type="video/mp4"/>
       Your browser cannot display this video.
     </video>
     <h1 class="block-text">{{ videoData.video_name }}</h1>
-
-    <span class="block-text"> {{ videoData.author }}</span>
-
-    <span class="block-text">{{ videoData.views }} views {{ timeAgo }}</span>
-    <br />
-    <span class="block-text">{{ videoData.description }}</span>
+    <p class="text-start"> {{ videoData.author }} {{ videoData.views }} views {{ timeAgo }}</p>
+    <p class="text-start">{{ videoData.description }}</p>
     <button v-if="videoData.author === userStore.username" @click="deleteVideo">
       Delete Video
     </button>
