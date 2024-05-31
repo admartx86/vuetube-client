@@ -35,7 +35,7 @@
     </p>
     <p class="text-start">{{ !isEditing ? videoData.description : null }}</p>
 
-    <!-- Edit Description Button -->
+    <div class="d-flex justify-content-evenly">
     <button
       v-if="videoData.author === userStore.username && !isEditing"
       @click="isEditing = true"
@@ -44,11 +44,19 @@
       Edit Description
     </button>
 
-    <!-- Description Editor -->
+ <button
+      v-if="videoData.author === userStore.username && !isEditing"
+      @click="showConfirmation"
+      class="btn btn-primary btn-lg btn-block"
+    >
+      Delete Video
+    </button>
+    </div>
+
     <div v-if="isEditing">
       <textarea v-model="editedDescription" rows="4" cols="50"></textarea>
       <br />
-      <div class="p-2">
+      <div class="p-2 d-flex justify-content-evenly">
         <button @click="cancelEdit" class="btn btn-secondary btn-lg btn-block">
           Cancel
         </button>
@@ -60,14 +68,7 @@
         </button>
       </div>
     </div>
-
-    <button
-      v-if="videoData.author === userStore.username && !isEditing"
-      @click="showConfirmation"
-      class="btn btn-primary btn-lg btn-block"
-    >
-      Delete Video
-    </button>
+   
     <div
       v-if="showConfirmDialog"
       class="modal fade show"
