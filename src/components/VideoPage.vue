@@ -4,7 +4,7 @@
       <div class="p-2">
         <router-link to="/">Home</router-link>
       </div>
-       <router-link class="p-2" to="/upload"
+       <router-link v-if="userStore.username" class="p-2" to="/upload"
         >Upload</router-link
       >
       <div class="p-2">

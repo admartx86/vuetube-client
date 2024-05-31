@@ -8,7 +8,7 @@
         alt="Vuetube"
       />
       <div class="d-flex justify-content-end">
-      <router-link class="p-2" to="/upload"
+      <router-link v-if="userStore.username" class="p-2" to="/upload"
         >Upload</router-link
       >
       <!-- <div class="d-flex flex-column justify-content-start p-2"> -->
