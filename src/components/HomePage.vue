@@ -11,12 +11,12 @@
       <router-link class="p-2" to="/upload"
         >Upload</router-link
       >
-      <div class="d-flex flex-column justify-content-start p-2">
+      <!-- <div class="d-flex flex-column justify-content-start p-2"> -->
         <span class="p-2" v-if="userStore.username"
           >Hello, {{ userStore.username }}!</span
         >
          <SignOutButton class="p-2" v-if="userStore.username" />
-      </div>
+      <!-- </div> -->
       
       <router-link class="p-2" v-if="!userStore.username" to="/sign-in"
         >Sign In</router-link

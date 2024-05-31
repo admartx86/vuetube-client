@@ -4,6 +4,9 @@
       <div class="p-2">
         <router-link to="/">Home</router-link>
       </div>
+       <router-link class="p-2" to="/upload"
+        >Upload</router-link
+      >
       <div class="p-2">
         <span v-if="userStore.username">Hello, {{ userStore.username }}!</span>
       </div>
