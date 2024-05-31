@@ -1,6 +1,12 @@
 <template>
   <div>
-    <button class="btn btn-lg btn-block btn-primary" v-if="!selectedFile" @click="selectFile">Select File</button>
+    <button
+      class="btn btn-lg btn-block btn-primary"
+      v-if="!selectedFile"
+      @click="selectFile"
+    >
+      Select File
+    </button>
     <span v-if="selectedFile">Video Name</span>
     <input v-if="selectedFile" type="text" v-model="video_name" />
     <br />
@@ -13,8 +19,20 @@
       v-model="description"
     />
     <br />
-    <button class="btn btn-secondary btn-lg btn-block" v-if="selectedFile" @click="goBack">Back</button>
-    <button class="btn btn-primary btn-lg btn-block" v-if="selectedFile" @click="postVideo">Post</button>
+    <button
+      class="btn btn-secondary btn-lg btn-block"
+      v-if="selectedFile"
+      @click="goBack"
+    >
+      Back
+    </button>
+    <button
+      class="btn btn-primary btn-lg btn-block"
+      v-if="selectedFile"
+      @click="postVideo"
+    >
+      Post
+    </button>
     <input
       type="file"
       ref="fileInput"

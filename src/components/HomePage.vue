@@ -1,27 +1,22 @@
 <template>
   <div>
     <div class="d-flex justify-content-between">
-      
       <img
         src="https://vuetube.s3.us-east-2.amazonaws.com/Vuetube_Banner.webp"
         class="w-50"
         alt="Vuetube"
       />
       <div class="d-flex justify-content-end">
-      <router-link v-if="userStore.username" class="p-2" to="/upload"
-        >Upload</router-link
-      >
-      <!-- <div class="d-flex flex-column justify-content-start p-2"> -->
+        <router-link v-if="userStore.username" class="p-2" to="/upload"
+          >Upload</router-link
+        >
         <span class="p-2" v-if="userStore.username"
           >Hello, {{ userStore.username }}!</span
         >
-         <SignOutButton v-if="userStore.username" class="sign-out-link p-2" />
-      <!-- </div> -->
-      
-      <router-link class="p-2" v-if="!userStore.username" to="/sign-in"
-        >Sign In</router-link
-      >
-     
+        <SignOutButton v-if="userStore.username" class="sign-out-link p-2" />
+        <router-link class="p-2" v-if="!userStore.username" to="/sign-in"
+          >Sign In</router-link
+        >
       </div>
     </div>
     <ul class="p-2">
@@ -36,8 +31,9 @@
               class="text-dark text-decoration-none"
               :href="`${viteAppUrl}/video/${video.unique_code}`"
             >
+              <div class="video-container">
               <video
-                class="video-responsive border rounded-4"
+                class="video-responsive"
                 v-if="video.video_url"
                 @mouseover="playVideo"
                 @mouseout="pauseVideo"
@@ -47,7 +43,9 @@
                 <source :src="video.video_url" type="video/mp4" />
                 Your browser cannot display this video.
               </video>
+              </div>
             </a>
+
             <h2 class="text-start">{{ video.video_name }}</h2>
             <p class="text-start">
               {{ video.author }} {{ video.views }} views {{ video.timeAgo }}
@@ -110,22 +108,37 @@
 </script>
 
 <style>
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+  }
+
+  .video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   .video-responsive {
     max-width: 100%;
     max-height: auto;
     object-fit: contain;
   }
 
-
   .sign-out-link {
-  text-decoration: underline;
-  color: #007bff; 
-}
+    text-decoration: underline;
+    color: #007bff;
+  }
 
-.sign-out-link:hover {
-  text-decoration: underline;
-  color: #0056b3;
-   cursor: pointer;
-}
-
+  .sign-out-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+    cursor: pointer;
+  }
 </style>
