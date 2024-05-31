@@ -11,7 +11,7 @@
         <span v-if="userStore.username">Hello, {{ userStore.username }}!</span>
       </div>
       <div class="p-2">
-        <SignOutButton v-if="userStore.username" />
+        <SignOutButton v-if="userStore.username" class="sign-out-link"  />
       </div>
       <div class="p-2">
         <router-link v-if="!userStore.username" to="/sign-in"
@@ -249,4 +249,16 @@
     background-color: #f8f9fa;
     border-color: #f8f9fa;
   }
+
+  .sign-out-link {
+  text-decoration: underline;
+  color: #007bff;
+}
+
+.sign-out-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+   cursor: pointer;
+}
+
 </style>

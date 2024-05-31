@@ -15,7 +15,7 @@
         <span class="p-2" v-if="userStore.username"
           >Hello, {{ userStore.username }}!</span
         >
-         <SignOutButton class="p-2" v-if="userStore.username" />
+         <SignOutButton v-if="userStore.username" class="sign-out-link p-2" />
       <!-- </div> -->
       
       <router-link class="p-2" v-if="!userStore.username" to="/sign-in"
@@ -109,10 +109,23 @@
   };
 </script>
 
-<style scoped>
+<style>
   .video-responsive {
     max-width: 100%;
     max-height: auto;
     object-fit: contain;
   }
+
+
+  .sign-out-link {
+  text-decoration: underline;
+  color: #007bff; 
+}
+
+.sign-out-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+   cursor: pointer;
+}
+
 </style>
